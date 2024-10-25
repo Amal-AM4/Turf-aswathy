@@ -1,3 +1,6 @@
+const jwt = require("jsonwebtoken");
+const prisma = require("../config/database");
+
 var express = require('express');
 const adminController = require('../controllers/adminController');
 const managerController = require('../controllers/managerController');
@@ -13,6 +16,22 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');
+});
+
+// Assuming you have a route file or in your main app file
+router.get('/search-turf', async (req, res) => {
+  const { place } = req.query;
+
+  try {
+      const turfs = await prisma.Turf.findMany({
+          where: { place: { contains: place, mode: 'insensitive' } },
+          include: { turfSchedules: true }
+      });
+      res.json(turfs);
+  } catch (error) {
+      console.error("Error fetching turf data:", error);
+      res.status(500).json({ error: "Server error" });
+  }
 });
 
 // admin

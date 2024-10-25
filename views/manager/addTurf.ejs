@@ -84,7 +84,7 @@
               <th>#</th>
               <th>Turf Name</th>
               <th>Location</th>
-              <th>Amount</th>
+              <th>Amount (₹)</th>
               <th>Add Schedule</th>
               <th>Schedule Time</th>
               <th>Is Booked</th>
@@ -104,7 +104,7 @@
                       <% if (turf.turfSchedules && turf.turfSchedules.length > 0) { %>
                           <ul>
                               <% turf.turfSchedules.forEach(schedule => { %>
-                                  <li class="btn btn-outline-danger"><%= schedule.scheduleTime %></li>
+                                  <li class="btn btn-outline-success"><%= schedule.scheduleTime %></li>
                               <% }) %>
                           </ul>
                       <% } else { %>
