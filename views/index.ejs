@@ -1,1 +1,99 @@
-<h1>Turf</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Online Turf Booking System</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Nunito:300,400,600,700|Poppins:300,400,500,600,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link rel="stylesheet" href="assets/css/index.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul class="nav justify-content-end p-3">
+        <li class="nav-item">
+          <a href="/user/login" class="btn btn-primary mx-1">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a href="/user/register" class="btn btn-secondary mx-1">Create User Account</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container text-center my-5">
+      <h1>Online Sports Turf Booking System</h1>
+      <p>Find and book sports turfs easily at your preferred location. Check availability, weather conditions, and book your slot!</p>
+      
+      <h3 class="my-4">Search for Turf</h3>
+      <form action="">
+        <div class="input-group mb-4">
+          <input type="text" class="form-control" name="place" placeholder="Enter Place/Location" aria-label="Place/Location">
+          <button class="btn btn-success" type="submit">Search</button>
+        </div>
+      </form>
+
+      <table class="table table-bordered table-hover mt-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Turf Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Weather</th>
+            <th scope="col">Temperature (°C)</th>
+            <th scope="col">Price (Hr)</th>
+            <th scope="col">Book</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Ozone Turf</td>
+            <td>Attingal</td>
+            <td>☀️ Sunny</td>
+            <td>29°C</td>
+            <td>nil</td>
+            <td><a href="#" class="btn btn-outline-danger btn-sm">10-11</a></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="footer bg-light text-center py-3">
+    <div class="container">
+      <span>&copy; 2024 <strong>Aswathy</strong>. All Rights Reserved.</span>
+    </div>
+  </footer>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
