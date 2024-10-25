@@ -29,17 +29,23 @@ model Manager {
   name     String
   phone    String @unique
   password String
+  turfs    Turf[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Turf {
-  id              Int            @id @default(autoincrement())
+  id              Int     @id @default(autoincrement())
   name            String
   place           String
-  isCompletedBook Boolean        @default(false)
-  turfSchedules   TurfSchedule[]
+  amount          Float
+  scheduleTime    String
+  isCompletedBook Boolean @default(false)
+  managerId       Int
+  manager         Manager @relation(fields: [managerId], references: [id])
+
+  turfSchedules TurfSchedule[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -60,5 +66,3 @@ enum PaymentStatus {
   COMPLETED
   CANCELLED
 }
-
-

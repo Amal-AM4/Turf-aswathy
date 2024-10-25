@@ -41,10 +41,33 @@
    <%- include('aside.ejs') %>
   <!-- End Sidebar-->
 
-  <main id="main" class="main">
-    <h1>Welcome <%= data.name %></h1>
-
+  <main id="main" class="main my-8">
+    <div class="text-center">
+      <h1 class="display-4 mb-3">Welcome, <%= data.name %></h1>
+      <p class="lead">This is the Manager/Owner Dashboard where you can manage turf details, view payments, and more.</p>
+    </div>
+  
+    <div class="row text-center mt-5">
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-primary">
+          <div class="card-body">
+            <h5 class="card-title">Total Turfs</h5>
+            <p class="display-6 text-primary">0</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-success">
+          <div class="card-body">
+            <h5 class="card-title">Total Payments (monthly)</h5>
+            <p class="display-6 text-success">Rs. 0.00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
   </main>
+  
 
   <!-- ======= Footer ======= -->
    <%- include('footer.ejs') %>
