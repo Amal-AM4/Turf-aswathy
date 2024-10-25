@@ -40,7 +40,6 @@ model Turf {
   name            String
   place           String
   amount          Float
-  scheduleTime    String
   isCompletedBook Boolean @default(false)
   managerId       Int
   manager         Manager @relation(fields: [managerId], references: [id])
@@ -52,10 +51,11 @@ model Turf {
 }
 
 model TurfSchedule {
-  id     Int     @id @default(autoincrement())
-  turfId Int
-  turf   Turf    @relation(fields: [turfId], references: [id])
-  isPaid Boolean @default(false)
+  id           Int     @id @default(autoincrement())
+  turfId       Int
+  turf         Turf    @relation(fields: [turfId], references: [id])
+  scheduleTime String
+  isPaid       Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -28,9 +28,13 @@ router.get('/manager/', managerController.managerLogin);
 router.get('/manager/logout', managerController.managerLogout);
 router.get('/manager/register', managerController.managerReg);
 router.get('/manager/index', authManager, managerController.home);
+router.get('/manager/addTurf', authManager, managerController.addTurf);
+router.get('/manager/addSchedule/:id', authManager, managerController.addSchedule);
 
 router.post('/manager/register', managerController.managerRegData);
 router.post('/manager/login', managerController.managerLoginProcess);
+router.post('/manager/addTurf/:mId', managerController.addNewTurf);
+router.post('/manager/addSchedule/:id', managerController.addScheduleTime);
 
 // user
 router.get('/user/login', userController.login);
