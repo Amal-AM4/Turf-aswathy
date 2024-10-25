@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Register | Emp</title>
+  <title>Register | Manager</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -44,7 +44,7 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="" class="logo d-flex align-items-center w-auto">
                   <img src="../assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">LSF</span>
+                  <span class="d-none d-lg-block">Online Turf Booking System</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -53,11 +53,11 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Create an Emp Account</h5>
+                    <h5 class="card-title text-center pb-0 fs-4">Create an Turf Manager/Owner Account</h5>
                     <p class="text-center small">Enter your personal details to create account</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate action="/emp/register" method="post">
+                  <form class="row g-3 needs-validation" novalidate action="/manager/register" method="post">
 
                     <div class="col-12">
                       <label for="yourName" class="form-label">Full Name</label>
@@ -73,40 +73,6 @@
                     </div>
 
                     <div class="col-12">
-                      <label for="yourCat" class="form-label">Job Title</label>
-                      <select name="category" id="" class="form-control">
-                        <% data.forEach(col => { %>
-                         <option value="<%= col.id %>"><%= col.name %></option>
-                        <% }) %>
-                      </select>
-                      <div class="invalid-feedback">Please enter a valid category!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourexp" class="form-label">Experience</label>
-                      <input type="number" name="exp" class="form-control" id="yourexp" required placeholder="Eg: 1,2,3">
-                      <div class="invalid-feedback">Please enter a valid Experience year!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="youredu" class="form-label">Education (Current Higher Qualification)</label>
-                      <input type="text" name="edu" class="form-control" id="youredu" required placeholder="Higher Qualification">
-                      <div class="invalid-feedback">Please enter a valid Experience year!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="youraddr" class="form-label">Address</label>
-                      <input type="text" name="addr" class="form-control" id="youraddr" required placeholder="House Name, Place Name, P.O">
-                      <div class="invalid-feedback">Please enter a valid address!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourplace" class="form-label">Place</label>
-                      <input type="text" name="place" class="form-control" id="yourplace" required placeholder="Place Name">
-                      <div class="invalid-feedback">Please enter a valid place!</div>
-                    </div>
-
-                    <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required placeholder="•••••••••">
                       <div class="invalid-feedback">Please enter your password!</div>
@@ -116,7 +82,7 @@
                       <button class="btn btn-primary w-100" type="submit">Create Account</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Already have an account? <a href="/emp/login">Log in</a></p>
+                      <p class="small mb-0">Already have an account? <a href="/manager/">Log in</a></p>
                     </div>
                   </form>
 

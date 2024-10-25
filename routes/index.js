@@ -1,11 +1,11 @@
 var express = require('express');
 const adminController = require('../controllers/adminController');
-const empController = require('../controllers/empController');
+const managerController = require('../controllers/managerController');
 const userController = require('../controllers/userController');
 
 
 const authAdmin = require('../middlewares/authAdmin');
-const authEmp = require('../middlewares/authEmp');
+const authManager = require('../middlewares/authManager');
 const authUser = require('../middlewares/authUser');
 
 var router = express.Router();
@@ -19,22 +19,18 @@ router.get('/', function(req, res, next) {
 router.get('/admin/logout', adminController.adminLogout);
 router.get('/admin/login', adminController.adminLogin);
 router.get('/admin/index',authAdmin, adminController.home);
-router.get('/admin/addCategory',authAdmin, adminController.addCategory);
-router.get('/admin/empDetails',authAdmin, adminController.empDetails);
-router.get('/admin/removeCategory/:id',authAdmin, adminController.removeCategory);
-router.get('/admin/removeEmp/:id',authAdmin, adminController.removeEmp);
 
 router.post('/admin/login', adminController.adminLoginProcess);
-router.post('/admin/addCategory', adminController.categoryAdd);
 
-// emp
-router.get('/emp/login', empController.empLogin);
-router.get('/emp/logout', empController.empLogout);
-router.get('/emp/register', empController.empReg);
-router.get('/emp/index', authEmp, empController.home);
 
-router.post('/emp/register', empController.empRegData);
-router.post('/emp/login', empController.empLoginProcess);
+// manager
+router.get('/manager/', managerController.managerLogin);
+router.get('/manager/logout', managerController.managerLogout);
+router.get('/manager/register', managerController.managerReg);
+router.get('/manager/index', authManager, managerController.home);
+
+router.post('/manager/register', managerController.managerRegData);
+router.post('/manager/login', managerController.managerLoginProcess);
 
 // user
 router.get('/user/login', userController.login);
