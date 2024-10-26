@@ -26,11 +26,14 @@
   <header>
     <nav>
       <ul class="nav justify-content-end p-3">
+
         <% if (userActive === false) { %>
+          
           <li class="nav-item">
             <a href="/user/login" class="btn btn-primary mx-1">Sign In</a>
           </li>
         <% } else { %>
+
           <li class="nav-item">
             <a href="/user/dashboard" class="btn btn-outline-primary mx-1"><%= data.name %></a>
           </li>
@@ -95,6 +98,8 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  
+
   <script>
     const apikey = "193b2ecc88818699b736c69aa1eaf873";
     
@@ -129,12 +134,16 @@
                     weatherInfo = 'Weather data not available';
                 }
 
-                // Map each schedule to a button link
-                const scheduleLinks = turf.turfSchedules.length > 0 
-                    ? turf.turfSchedules.map(schedule => 
-                        `<a href="/book-schedule/${turf.id}/${schedule.id}" class="btn btn-outline-danger btn-sm me-1">${schedule.scheduleTime}</a>`
-                      ).join('') // Join buttons without separator
-                    : '<span>No Schedule</span>'; // Show a message if there are no schedules
+                `<% if (userActive === true) {  %>`
+                     // Map each schedule to a button link
+                    const scheduleLinks = turf.turfSchedules.length > 0 
+                        ? turf.turfSchedules.map(schedule => 
+                            `<a href="/book-schedule/${turf.id}/${schedule.id}/<%= data.id %>" class="btn btn-outline-danger btn-sm me-1">${schedule.scheduleTime}</a>`
+                          ).join('') // Join buttons without separator
+                        : '<span>No Schedule</span>'; // Show a message if there are no schedules
+                `<% } %>`
+
+                
 
                 const row = document.createElement("tr");
                 
@@ -147,9 +156,16 @@
                     </td> <!-- Weather Info -->
                     <td>${turf.facilities}</td>
                     <td>${turf.amount} / Hr</td>
-                    <td>
-                      ${scheduleLinks} <!-- Display the schedule times as buttons here -->
-                    </td>
+
+                    <% if (userActive === false) { %>
+                      <td>
+                        <h6 class="text-danger">Please Login to book</h6>
+                      </td>
+                    <% } else { %>
+                      <td>
+                        ${scheduleLinks} 
+                      </td>
+                    <% } %>
                 `;
                 
                 tbody.appendChild(row);

@@ -58,7 +58,7 @@ router.get('/search-turf', async (req, res) => {
   }
 });
 
-// router.get('/book-schedule/3/6');
+// router.get('/book-schedule/:turfId/:schedule/:userId');
 
 // admin
 router.get('/admin/logout', adminController.adminLogout);
