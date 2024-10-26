@@ -40,6 +40,7 @@ model Turf {
   name            String
   place           String
   amount          Float
+  facilities      String?
   isCompletedBook Boolean @default(false)
   managerId       Int
   manager         Manager @relation(fields: [managerId], references: [id])

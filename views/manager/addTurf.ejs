@@ -65,6 +65,11 @@
             <label for="amount" class="form-label">Amount</label>
             <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount" step="0.01" required>
           </div>
+
+          <div class="form-group mb-3">
+            <label for="facilities" class="form-label">Other Facilities</label>
+            <textarea name="facilities" id="facilities" class="form-control" >Nil</textarea>
+          </div>
           
           <!-- Submit Button -->
           <div class="text-center">
@@ -85,6 +90,7 @@
               <th>Turf Name</th>
               <th>Location</th>
               <th>Amount (₹)</th>
+              <th>Facilities</th>
               <th>Add Schedule</th>
               <th>Schedule Time</th>
               <th>Is Booked</th>
@@ -97,6 +103,7 @@
                   <td><%= turf.name %></td>
                   <td><%= turf.place %></td>
                   <td><%= turf.amount %></td>
+                  <td><%= turf.facilities %></td>
                   <td>
                       <a href="/manager/addSchedule/<%= turf.id %>" class="link">Add Schedule</a>
                   </td>

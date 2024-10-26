@@ -100,7 +100,7 @@ async function addSchedule(req, res) {
 async function addNewTurf(req, res) {
     try {
         const id = req.params.mId;
-        const { name, place, amount } = req.body;
+        const { name, place, amount, facilities } = req.body;
 
         const newTurf = await prisma.Turf.create({
             data: { 
@@ -108,6 +108,7 @@ async function addNewTurf(req, res) {
                 name: name,
                 place: place,
                 amount: parseFloat(amount),
+                facilities: facilities
             },
         });
 

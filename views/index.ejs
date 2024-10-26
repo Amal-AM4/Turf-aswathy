@@ -57,6 +57,7 @@
             <th scope="col">Turf Name</th>
             <th scope="col">Location</th>
             <th scope="col">Weather</th>
+            <th scope="col">Facilities</th>
             <th scope="col">Price (Hr)</th>
             <th scope="col">Book</th>
           </tr>
@@ -125,7 +126,7 @@
                 // Map each schedule to a button link
                 const scheduleLinks = turf.turfSchedules.length > 0 
                     ? turf.turfSchedules.map(schedule => 
-                        `<a href="/book-schedule/${turf.id}/${schedule.id}" class="btn btn-outline-primary btn-sm me-1">${schedule.scheduleTime}</a>`
+                        `<a href="/book-schedule/${turf.id}/${schedule.id}" class="btn btn-outline-danger btn-sm me-1">${schedule.scheduleTime}</a>`
                       ).join('') // Join buttons without separator
                     : '<span>No Schedule</span>'; // Show a message if there are no schedules
 
@@ -138,6 +139,7 @@
                     <td>
                       <b>${weatherInfo}</b>
                     </td> <!-- Weather Info -->
+                    <td>${turf.facilities}</td>
                     <td>${turf.amount} / Hr</td>
                     <td>
                       ${scheduleLinks} <!-- Display the schedule times as buttons here -->
