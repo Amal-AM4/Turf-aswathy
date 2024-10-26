@@ -26,9 +26,15 @@
   <header>
     <nav>
       <ul class="nav justify-content-end p-3">
-        <li class="nav-item">
-          <a href="/user/login" class="btn btn-primary mx-1">Sign In</a>
-        </li>
+        <% if (userActive === false) { %>
+          <li class="nav-item">
+            <a href="/user/login" class="btn btn-primary mx-1">Sign In</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a href="/user/dashboard" class="btn btn-outline-primary mx-1"><%= data.name %></a>
+          </li>
+        <% } %>
         <li class="nav-item">
           <a href="/user/register" class="btn btn-secondary mx-1">Create User Account</a>
         </li>

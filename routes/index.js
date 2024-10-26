@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const prisma = require("../config/database");
 
+require('dotenv').config();
+const CODE = process.env.JSON_KEY;
+
 var express = require('express');
 const adminController = require('../controllers/adminController');
 const managerController = require('../controllers/managerController');
@@ -14,8 +17,29 @@ const authUser = require('../middlewares/authUser');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index');
+router.get('/', async function(req, res, next) {
+  const userToken = req.cookies.userToken;
+
+  if (userToken === undefined) {
+    try {
+      res.render('index', { userActive: false, });
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    try {
+      const user = jwt.verify(userToken, CODE);
+      const pk = parseInt(user.userId);
+
+      const users = await prisma.User.findFirst({
+        where: { id: pk }
+      });
+  
+      res.render('index', { data: users, userActive: true, });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 });
 
 // Assuming you have a route file or in your main app file

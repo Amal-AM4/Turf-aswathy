@@ -22,13 +22,11 @@ async function register(req, res) {
 
 async function registerUserData (req, res) {
     try {
-        const { name, phone, addr, place, password } = req.body;
-        const addEmpData = await prisma.User.create({
+        const { name, phone, password } = req.body;
+        const addUser = await prisma.User.create({
             data: {
                 name: name,
                 phone: phone,
-                address: addr,
-                place: place,
                 password: password
             }
         });
