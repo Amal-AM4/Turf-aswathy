@@ -58,7 +58,64 @@ router.get('/search-turf', async (req, res) => {
   }
 });
 
-// router.get('/book-schedule/:turfId/:schedule/:userId');
+// Order page
+router.get('/bookschedule/:turfId/:schedule/:userId', async (req, res) => {
+  // Parse each parameter individually
+  const turfId = parseInt(req.params.turfId);
+  const scheduleId = parseInt(req.params.schedule);
+  const userId = parseInt(req.params.userId);
+
+  try {
+    // Fetch turf details by turfId
+    const turf = await prisma.Turf.findUnique({
+      where: { id: turfId }
+    });
+
+    if (!turf) {
+      return res.status(404).send("Turf not found");
+    }
+
+    // Fetch manager details associated with the turf
+    const manager = await prisma.Manager.findUnique({
+      where: { id: turf.managerId } // No need to parse `turf.managerId` if it's already an integer
+    });
+
+    if (!manager) {
+      return res.status(404).send("Manager not found");
+    }
+
+    // Fetch user details by userId
+    const user = await prisma.User.findUnique({
+      where: { id: userId }
+    });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Fetch the specific schedule by schedule ID
+    const schedule = await prisma.TurfSchedule.findUnique({
+      where: { id: scheduleId }
+    });
+
+    if (!schedule) {
+      return res.status(404).send("Schedule not found");
+    }
+
+    // Render the booking page with all necessary details
+    res.render('bookingPage', {
+      turf,
+      manager,
+      user,
+      schedule
+    });
+  } catch (error) {
+    console.error("Error fetching booking details:", error);
+    res.status(500).send("Error loading booking page");
+  }
+});
+
+
 
 // admin
 router.get('/admin/logout', adminController.adminLogout);

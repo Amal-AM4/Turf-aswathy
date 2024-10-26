@@ -138,13 +138,11 @@
                      // Map each schedule to a button link
                     const scheduleLinks = turf.turfSchedules.length > 0 
                         ? turf.turfSchedules.map(schedule => 
-                            `<a href="/book-schedule/${turf.id}/${schedule.id}/<%= data.id %>" class="btn btn-outline-danger btn-sm me-1">${schedule.scheduleTime}</a>`
+                            `<a href="/bookschedule/${turf.id}/${schedule.id}/<%= data.id %>" class="btn btn-outline-danger btn-sm me-1">${schedule.scheduleTime}</a>`
                           ).join('') // Join buttons without separator
                         : '<span>No Schedule</span>'; // Show a message if there are no schedules
                 `<% } %>`
-
                 
-
                 const row = document.createElement("tr");
                 
                 row.innerHTML = `
