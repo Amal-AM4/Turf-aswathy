@@ -117,6 +117,8 @@
             const tbody = document.getElementById("turfTableBody");
             tbody.innerHTML = ""; // Clear previous results
 
+            const today = new Date().toISOString().split('T')[0]; // Format today's date as YYYY-MM-DD
+
             for (let index = 0; index < turfs.length; index++) {
                 const turf = turfs[index];
                 
@@ -134,13 +136,18 @@
                     weatherInfo = 'Weather data not available';
                 }
 
+                // Filter turfSchedules where isPaid is false and createdAt is today
+                const filteredSchedules = turf.turfSchedules.filter(schedule => 
+                    !schedule.isPaid && schedule.createdAt.startsWith(today)
+                );
+
                 `<% if (userActive === true) {  %>`
-                     // Map each schedule to a button link
-                    const scheduleLinks = turf.turfSchedules.length > 0 
-                        ? turf.turfSchedules.map(schedule => 
+                    // Map each schedule to a button link if it meets the criteria
+                    const scheduleLinks = filteredSchedules.length > 0 
+                        ? filteredSchedules.map(schedule => 
                             `<a href="/bookschedule/${turf.id}/${schedule.id}/<%= data.id %>" class="btn btn-outline-danger btn-sm me-1">${schedule.scheduleTime}</a>`
                           ).join('') // Join buttons without separator
-                        : '<span>No Schedule</span>'; // Show a message if there are no schedules
+                        : '<span>No Available Schedules</span>'; // Show a message if there are no matching schedules
                 `<% } %>`
                 
                 const row = document.createElement("tr");
@@ -197,7 +204,8 @@
 
         return '🌈'; // Default emoji if not matched
     }
-  </script>
+</script>
+
 
 
 

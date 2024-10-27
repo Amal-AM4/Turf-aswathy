@@ -45,11 +45,28 @@ router.get('/', async function(req, res, next) {
 // Assuming you have a route file or in your main app file
 router.get('/search-turf', async (req, res) => {
   const { place } = req.query;
+  const today = new Date().toISOString().split('T')[0]; // Format today's date as YYYY-MM-DD
 
   try {
       const turfs = await prisma.Turf.findMany({
-          where: { place: { contains: place, mode: 'insensitive' } },
-          include: { turfSchedules: true }
+          where: {
+              place: { contains: place, mode: 'insensitive' },
+              createdAt: {
+                  gte: new Date(today + "T00:00:00.000Z"),
+                  lt: new Date(today + "T23:59:59.999Z")
+              }
+          },
+          include: {
+              turfSchedules: {
+                  where: {
+                      isPaid: false,
+                      createdAt: {
+                          gte: new Date(today + "T00:00:00.000Z"),
+                          lt: new Date(today + "T23:59:59.999Z")
+                      }
+                  }
+              }
+          }
       });
       res.json(turfs);
   } catch (error) {
@@ -57,6 +74,7 @@ router.get('/search-turf', async (req, res) => {
       res.status(500).json({ error: "Server error" });
   }
 });
+
 
 // Order page
 router.get('/bookschedule/:turfId/:schedule/:userId', async (req, res) => {
