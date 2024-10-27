@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard | Manager</title>
+  <title>Payment | Manager</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -41,32 +41,51 @@
    <%- include('aside.ejs') %>
   <!-- End Sidebar-->
 
-  <main id="main" class="main my-8">
-    <div class="text-center">
-      <h1 class="display-4 mb-3">Welcome, <%= data.name %></h1>
-      <p class="lead">This is the Manager/Owner Dashboard where you can manage turf details, view payments, and more.</p>
-    </div>
-  
-    <div class="row text-center mt-5">
-      <div class="col-md-6 mb-4">
-        <div class="card shadow-sm border-primary">
-          <div class="card-body">
-            <h5 class="card-title">Total Turfs</h5>
-            <p class="display-6 text-primary"><%= totalTurfs %></p>
+  <main id="main" class="main py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-12">
+          <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white text-center">
+              <h5 class="mb-0">Turf Booking Details</h5>
+            </div>
+            <div class="card-body">
+              <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Turf Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Booked By</th>
+                    <th scope="col">Booking Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Card Name</th>
+                    <th scope="col">Card No</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% orders.forEach((col, index) => { %>
+                   <tr>
+                      <td><%= index + 1 %></td>
+                      <td><%= col.turf.name %></td>
+                      <td><%= col.turf.place %></td>
+                      <td><%= col.user.name %></td>
+                      <td><%= new Date(col.createdAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) %></td>
+                      <td><%= col.turfSchedule.scheduleTime %></td>
+                      <td>Rs. <%= col.turf.amount %></td>
+                      <td><%= col.cardName %></td>
+                      <td><%= col.cardno %></td>
+                      <td><span class="badge bg-success">COMPLETED</span></td>
+                   </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6 mb-4">
-        <div class="card shadow-sm border-success">
-          <div class="card-body">
-            <h5 class="card-title">Total Payments (monthly)</h5>
-            <p class="display-6 text-success">Rs. <%= totalPayments %></p>
-          </div>
-        </div>
-      </div>
-    </div>
   </main>
-
   
 
   <!-- ======= Footer ======= -->

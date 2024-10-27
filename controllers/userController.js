@@ -90,7 +90,16 @@ async function dashboard (req, res) {
         const users = await prisma.User.findUnique({
             where: { id: parseInt(pk) }
         });
-        res.render('user/dashboard', { data: users });
+
+        const orders = await prisma.Order.findMany({
+            where: { userId: parseInt(pk) },
+            include: {
+                turf: true,
+                turfSchedule: true
+            }
+        });
+
+        res.render('user/dashboard', { data: users, orders });
     } catch (error) {
         console.error(error);
     }

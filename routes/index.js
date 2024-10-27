@@ -186,6 +186,7 @@ router.get('/manager/register', managerController.managerReg);
 router.get('/manager/index', authManager, managerController.home);
 router.get('/manager/addTurf', authManager, managerController.addTurf);
 router.get('/manager/addSchedule/:id', authManager, managerController.addSchedule);
+router.get('/manager/payment', authManager, managerController.payment);
 
 router.post('/manager/register', managerController.managerRegData);
 router.post('/manager/login', managerController.managerLoginProcess);

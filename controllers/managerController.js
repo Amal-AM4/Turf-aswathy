@@ -42,14 +42,50 @@ async function home(req, res) {
     try {
         const managerData = req.manager;
         const pk = parseInt(managerData.managerId);
-        
-        const manager = await prisma.Manager.findUnique({
-            where: { id: pk },
-        });
 
-        res.render('manager/index', { data: manager })
+        // Start of the current month
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        // Use Promise.all to fetch manager details, turf count, and orders in parallel
+        const [manager, totalTurfs, orders] = await Promise.all([
+            // Fetch manager details
+            prisma.Manager.findUnique({
+                where: { id: pk },
+            }),
+
+            // Get the total number of turfs managed by this manager
+            prisma.Turf.count({
+                where: { managerId: pk },
+            }),
+
+            // Fetch orders for the current month with their associated turfs
+            prisma.Order.findMany({
+                where: {
+                    turf: { managerId: pk },
+                    createdAt: { gte: startOfMonth },
+                },
+                include: {
+                    turf: true,
+                },
+            }),
+        ]);
+
+        // Sum up the `amount` values from associated turfs
+        const monthlyTotalPayments = orders.reduce((total, order) => {
+            return total + (order.turf.amount || 0);
+        }, 0);
+
+        // Render manager dashboard with retrieved data
+        res.render('manager/index', {
+            data: manager,
+            totalTurfs,
+            totalPayments: monthlyTotalPayments.toFixed(2),
+        });
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching manager dashboard data:", error);
+        res.status(500).send("An error occurred while loading the dashboard.");
     }
 }
 
@@ -181,8 +217,37 @@ async function managerLogout (req, res) {
     return res.redirect('/manager/');
 }
 
+async function payment(req, res) {
+    try {
+        const managerData = req.manager;
+        const pk = parseInt(managerData.managerId);
+        
+        const manager = await prisma.Manager.findUnique({
+            where: { id: pk },
+        });
+
+        // Fetch orders linked to the manager's turfs
+        const orders = await prisma.Order.findMany({
+            where: {
+                turf: {
+                    managerId: pk  // Assuming Turf has a managerId field linking to the Manager model
+                }
+            },
+            include: {
+                turf: true,
+                turfSchedule: true,
+                user: true,
+            }
+        });
+
+        res.render('manager/payment', { data: manager, orders });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 
 module.exports = {
     managerLogin, managerReg, managerRegData, managerLoginProcess, managerLogout,
-    home, addTurf, addNewTurf, addSchedule, addScheduleTime,
+    home, addTurf, addNewTurf, addSchedule, addScheduleTime, payment,
 }
