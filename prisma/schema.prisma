@@ -15,10 +15,11 @@ model Admin {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   name     String
-  phone    String @unique
+  phone    String  @unique
   password String
+  orders   Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -45,6 +46,7 @@ model Turf {
   managerId       Int
   manager         Manager @relation(fields: [managerId], references: [id])
 
+  orders        Order[]
   turfSchedules TurfSchedule[]
 
   createdAt DateTime @default(now())
@@ -57,6 +59,24 @@ model TurfSchedule {
   turf         Turf    @relation(fields: [turfId], references: [id])
   scheduleTime String
   isPaid       Boolean @default(false)
+  orders       Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id             Int           @id @default(autoincrement())
+  orderId        String        @default(uuid())
+  cardName       String
+  cardno         String
+  userId         Int
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  turfId         Int
+  turf           Turf          @relation(fields: [turfId], references: [id], onDelete: Cascade)
+  turfScheduleId Int
+  turfSchedule   TurfSchedule  @relation(fields: [turfScheduleId], references: [id], onDelete: Cascade)
+  payment        PaymentStatus @default(COMPLETED) // Enum default without quotes
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

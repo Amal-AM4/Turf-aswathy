@@ -115,6 +115,42 @@ router.get('/bookschedule/:turfId/:schedule/:userId', async (req, res) => {
   }
 });
 
+router.post('/order/:userId/:managerId/:turfId/:scheduleId', async (req, res) => {
+  try {
+    const { name, cardno, cvv, expiryDate, amount } = req.body;
+    const userId = parseInt(req.params.userId);
+    const turfId = parseInt(req.params.turfId);
+    const scheduleId = parseInt(req.params.scheduleId);
+    const managerId = parseInt(req.params.managerId);
+
+    // card no: 1442 4214 1442 4214
+
+    const ordered = await prisma.Order.create({
+      data: {
+        cardName: name,
+        cardno: cardno,
+        userId: userId,
+        turfId: turfId,
+        turfScheduleId: scheduleId,
+      }
+    });
+    console.log('Ordered is completed added.');
+
+    const updateSchedule = await prisma.TurfSchedule.update({
+      where: { id: scheduleId },
+      data: {
+        isPaid: true
+      }
+    });
+    console.log('Turf schedule is completed updated.');
+
+    res.redirect('/user/dashboard');
+    
+
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 
 // admin

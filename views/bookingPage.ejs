@@ -71,17 +71,20 @@
                 <h5 class="mb-0">Payment Information</h5>
               </div>
               <div class="card-body">
-                <form id="paymentForm" action="" method="post">
+                <form id="paymentForm" action="/order/<%= user.id %>/<%= manager.id %>/<%= turf.id %>/<%= schedule.id %>" method="post">
 
                 <div class="mb-3">
                     <label for="cardname" class="form-label">Card Holder Name</label>
-                    <input pattern="[A-Z][a-z]" type="text" class="form-control" id="cardname" placeholder="Enter card holder name" name="name" required>
+                    <input type="text" class="form-control" id="cardname" placeholder="Enter card holder name" name="name" required>
                 </div>
 
                   <!-- Card Number -->
                   <div class="mb-3">
                     <label for="cardNumber" class="form-label">Card Number</label>
                     <input type="text" class="form-control" id="cardNumber" placeholder="Enter card number" name="cardno" maxlength="19" required>
+                    <div class="invalid-feedback" style="display: none; color: red;">
+                      Invalid card number. Please enter a valid card number.
+                    </div>
                   </div>
                   
                   <!-- CVV and Expiry Date Row -->
@@ -98,7 +101,7 @@
                   <!-- Amount -->
                   <div class="mb-3">
                     <label for="amount" class="form-label">Amount</label>
-                    <input type="text" class="form-control" id="amount" value="₹<%= turf.amount %>" readonly disabled>
+                    <input type="text" class="form-control" id="amount" name="amount" value="₹<%= turf.amount %>" readonly disabled>
                   </div>
                   <!-- Pay Now Button -->
                   <div class="text-center">
@@ -128,12 +131,43 @@
   <script src="../../../assets/js/main.js"></script>
 
   <script>
+    document.getElementById("cardname").addEventListener("input", function(event) {
+      event.target.value = event.target.value.toUpperCase(); // Convert input to uppercase
+    });
+  </script>
+
+  <script>
+    const predefinedCardNumber = "1442 4214 1442 4214";
+    
     document.getElementById("cardNumber").addEventListener("input", function (event) {
       let input = event.target.value.replace(/\D/g, ''); // Remove all non-numeric characters
       input = input.substring(0, 16); // Limit to 16 digits
   
       // Format the input as groups of 4 digits
       event.target.value = input.replace(/(\d{4})(?=\d)/g, '$1 ');
+  
+      // Show or hide invalid feedback based on match with predefined card number
+      if (event.target.value === predefinedCardNumber) {
+        document.querySelector(".invalid-feedback").style.display = "none";
+      } else {
+        document.querySelector(".invalid-feedback").style.display = "block";
+      }
+    });
+  </script>
+
+  <script>
+    const expiryDateInput = document.getElementById("expiryDate");
+
+    expiryDateInput.addEventListener("input", function (event) {
+      let input = event.target.value.replace(/\D/g, ''); // Remove any non-digit characters
+
+      // Add a slash after the month digits
+      if (input.length >= 3) {
+        input = input.substring(0, 2) + '/' + input.substring(2, 4);
+      }
+      
+      // Limit to MM/YY format
+      event.target.value = input.substring(0, 5);
     });
   </script>
 
