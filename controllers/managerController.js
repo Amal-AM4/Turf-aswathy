@@ -167,6 +167,14 @@ async function addScheduleTime(req, res) {
             },
         });
 
+        // Update the corresponding Turf's updatedAt field
+        const updateTurf = await prisma.Turf.update({
+            where: { id: parseInt(id) },  // Ensure you're using the turfId for the update
+            data: { updatedAt: new Date() },  // Update to the current date
+        });
+
+
+
         console.log('Schedule time is added.');
         res.redirect('/manager/addTurf');
     } catch (error) {

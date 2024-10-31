@@ -107,17 +107,34 @@
                   <td>
                       <a href="/manager/addSchedule/<%= turf.id %>" class="link">Add Schedule</a>
                   </td>
+
                   <td>
-                      <% if (turf.turfSchedules && turf.turfSchedules.length > 0) { %>
-                          <ul>
-                              <% turf.turfSchedules.forEach(schedule => { %>
-                                  <li class="btn btn-outline-success"><%= schedule.scheduleTime %></li>
-                              <% }) %>
-                          </ul>
-                      <% } else { %>
-                          <span>No schedules</span>
-                      <% } %>
+                    <% if (turf.turfSchedules && turf.turfSchedules.some(schedule => { 
+                      const scheduleDate = new Date(schedule.createdAt);
+                      const today = new Date();
+                      return schedule.isPaid === false &&
+                             scheduleDate.getDate() === today.getDate() &&
+                             scheduleDate.getMonth() === today.getMonth() &&
+                             scheduleDate.getFullYear() === today.getFullYear();
+                })) { %>
+                    <ul>
+                        <% turf.turfSchedules.forEach(schedule => { 
+                            const scheduleDate = new Date(schedule.createdAt);
+                            const today = new Date();
+                            if (schedule.isPaid === false &&
+                                scheduleDate.getDate() === today.getDate() &&
+                                scheduleDate.getMonth() === today.getMonth() &&
+                                scheduleDate.getFullYear() === today.getFullYear()) { %>
+                                <li class="btn btn-outline-success"><%= schedule.scheduleTime %></li>
+                            <% } 
+                        }) %>
+                    </ul>
+                <% } else { %>
+                    <span>No schedules</span>
+                <% } %>
+                
                   </td>
+
                   <td>
                       <% if (turf.isCompletedBook) { %>
                           <span class="badge bg-success">Yes</span>

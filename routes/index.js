@@ -51,7 +51,7 @@ router.get('/search-turf', async (req, res) => {
       const turfs = await prisma.Turf.findMany({
           where: {
               place: { contains: place, mode: 'insensitive' },
-              createdAt: {
+              updatedAt: {
                   gte: new Date(today + "T00:00:00.000Z"),
                   lt: new Date(today + "T23:59:59.999Z")
               }
